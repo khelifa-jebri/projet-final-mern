@@ -8,24 +8,24 @@ const client = {
     },
     firstName: {
         type: String,
-        required: true,
+        required: true
     },
     lastName: {
         type: String,
-        required: true,
+        required: true
     },
     phone: {
         type: Number,
         required: true,
-        unique: true,
+        unique: true
     },
     email: {
         type: String,
-        unique: true,
+        unique: true
     },
     adress: {
         type: String,
-        required: true,
+        required: true
     }
 };
 
