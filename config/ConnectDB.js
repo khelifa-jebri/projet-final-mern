@@ -8,6 +8,7 @@ const ConnectDB = () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
+            useFindAndModify: false,
             serverSelectionTimeoutMS: 30000, // Keep trying to send operations for 5 seconds
             socketTimeoutMS: 45000 // Close sockets after 45 seconds of inactivity
         })

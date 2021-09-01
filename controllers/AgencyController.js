@@ -9,5 +9,16 @@ module.exports = {
 
     findAllAgencies(req, res) {
         agencyService.findAllAgencies(res);
+    },
+
+    updateAgency(req, res) {
+        const { id } = req.params;
+        const updatedAgency = {...req.body };
+        agencyService.updateAgency(id, updatedAgency, res);
+    },
+
+    deleteAgency(req, res) {
+        const { id } = req.params;
+        agencyService.deleteAgency(id, res);
     }
 }

@@ -28,6 +28,21 @@ const car = {
 
     fuel_type: {
         type: String,
+    },
+
+    is_available: {
+        type: Boolean,
+        default: true
+    },
+
+    hour_price: {
+        type: Number,
+        required: true
+    },
+
+    agency_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'agency'
     }
 };
 

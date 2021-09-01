@@ -40,5 +40,26 @@ module.exports = {
                 console.log(err)
             );
 
+    },
+    updateAgency(id, updatedAgency, res) {
+        agencyModel.findByIdAndUpdate(id, updatedAgency).then(data => res.status(200).json({
+                status: 200,
+                message: "Updated Agency : ",
+                data
+            }))
+            .catch(err =>
+                console.log(err)
+            );
+    },
+
+    deleteAgency(id, res) {
+        agencyModel.findByIdAndDelete(id).then(data => res.status(200).json({
+                status: 200,
+                message: "Deleted Agency : ",
+                data: data
+            }))
+            .catch(err =>
+                console.log(err)
+            );
     }
 }
