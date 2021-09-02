@@ -21,6 +21,6 @@ ConnectDB();
 
 //connecting the routes 
 app.use("/api/cars/", require("./routes/CarRoutes"));
-app.use("/api/clients/", require("./routes/ClientRoutes"));
+app.use("/api/users/", require("./routes/UserRoutes"));
 app.use("/api/agencies/", require("./routes/AgencyRoutes"));
 app.use("/api/adresses/", require("./routes/AddressRoutes"));

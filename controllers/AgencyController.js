@@ -11,6 +11,11 @@ module.exports = {
         agencyService.findAllAgencies(res);
     },
 
+    agencyById(req, res) {
+        const { id } = req.params;
+        agencyService.findAgencyById(id, res);
+    },
+
     updateAgency(req, res) {
         const { id } = req.params;
         const updatedAgency = {...req.body };

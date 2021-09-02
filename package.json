@@ -1,7 +1,7 @@
 {
-    "name": "exercice_finale",
+    "name": "projet_finale",
     "version": "1.0.0",
-    "description": "Exercice d'entrainement avant le projet final",
+    "description": "Projet finale",
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

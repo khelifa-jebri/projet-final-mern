@@ -8,7 +8,8 @@ module.exports = {
         address = addressModel.findById(address_id, (err, data) => {
             if (err) throw err;
             console.log(data);
-        })
+        });
+
         if (address != null) {
             agencyModel.create({
                     name,
@@ -30,6 +31,18 @@ module.exports = {
         }
 
     },
+
+    findAgencyById(id, res) {
+        agencyModel.findById(id)
+            .then(data =>
+                res.status(200).json({
+                    status: 200,
+                    msg: "Agency by id : ",
+                    data: data
+                }))
+            .catch(err => console.log(err))
+    },
+
     findAllAgencies(res) {
         agencyModel.find({}).then(data => res.status(200).json({
                 status: 200,
@@ -41,6 +54,7 @@ module.exports = {
             );
 
     },
+
     updateAgency(id, updatedAgency, res) {
         agencyModel.findByIdAndUpdate(id, updatedAgency).then(data => res.status(200).json({
                 status: 200,

@@ -13,6 +13,11 @@ module.exports = {
         carService.findAllCars(res);
     },
 
+    carById(req, res) {
+        const { id } = req.params;
+        carService.findCarById(id, res);
+    },
+
     updateCar(req, res) {
         const { id } = req.params;
         const updatedCar = {...req.body };
@@ -22,5 +27,15 @@ module.exports = {
     deleteCar(req, res) {
         const { id } = req.params;
         carService.deleteCar(id, res);
+    },
+
+    reserveCar(req, res) {
+        const { id } = req.params;
+        carService.reserveCar(id, res);
+    },
+
+    unreserveCar(req, res) {
+        const { id } = req.params;
+        carService.unreserveCar(id, res);
     }
 }
