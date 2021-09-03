@@ -5,7 +5,14 @@ module.exports = {
         const { cin, firstName, lastName, password, date_of_birth, email, phone_number, gender, image, address_id } = req.body;
         userService.addNewUser(cin, firstName, lastName, password, date_of_birth, email, phone_number, gender, image, address_id, res);
     },
-
+    register(req, res) {
+        const { cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address_id } = req.body;
+        userService.register(cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address_id, res)
+    },
+    login(req, res) {
+        const { email, password } = req.body;
+        userService.login(email, password, res);
+    },
     allUsers(req, res) {
         userService.findAllUsers(res);
     },
