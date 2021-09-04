@@ -15,11 +15,13 @@ module.exports = {
         const { id } = req.params;
         reservationService.findReservationById(id, res);
     },
+
     updateReservation(req, res) {
         const { id } = req.params;
         const updatedReservation = {...req.body };
         reservationService.updateReservation(id, updatedReservation, res);
     },
+
     acceptReservation(req, res) {
         const { id } = req.params;
         reservationService.acceptReservation(id, res);

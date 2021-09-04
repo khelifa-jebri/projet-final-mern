@@ -57,9 +57,7 @@ module.exports = {
             if (err) throw err;
             let duration_of_reservation = ((new Date(updatedReservation.end_date).getTime() - new Date(updatedReservation.start_date).getTime()) / 3600000);
             let cost = duration_of_reservation * data.hour_price;
-            const newReservation = {...updatedReservation, cost };
-            //console.log(newReservation);
-            reservationModel.findByIdAndUpdate(id, newReservation)
+            reservationModel.findByIdAndUpdate(id, {...updatedReservation, cost })
                 .then(data =>
                     res.status(200).json({
                         status: 200,
