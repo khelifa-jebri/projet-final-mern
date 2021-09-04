@@ -47,11 +47,13 @@ module.exports = {
     },
 
     updateCar(id, updatedCar, res) {
-        carModel.findByIdAndUpdate(id, updatedCar).then(data => res.status(200).json({
-                status: 200,
-                message: "Updated Car : ",
-                data
-            }))
+        carModel.findByIdAndUpdate(id, updatedCar)
+            .then(data =>
+                res.status(200).json({
+                    status: 200,
+                    message: "Updated Car : ",
+                    data
+                }))
             .catch(err =>
                 console.log(err)
             );

@@ -23,4 +23,4 @@ ConnectDB();
 app.use("/api/cars/", require("./routes/CarRoutes"));
 app.use("/api/users/", require("./routes/UserRoutes"));
 app.use("/api/agencies/", require("./routes/AgencyRoutes"));
-app.use("/api/adresses/", require("./routes/AddressRoutes"));
+app.use("/api/reservations/", require("./routes/ReservationRoutes"));

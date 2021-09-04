@@ -9,8 +9,6 @@ require("dotenv").config({ path: "./config/.env" });
 router.post("/registerUser", userController.register);
 router.post("/login", userController.login);
 
-router.post("/addNewUser", userController.addNewUser);
-
 router.get("/getAllUsers", extractToken, (req, res) => {
     jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
         if (err) throw err;
@@ -41,6 +39,7 @@ router.get("/getUserById/:id", extractToken, (req, res) => {
 
 router.get("/getUserByEmail/:email", userController.userByEmail);
 router.put("/updateUser/:id", userController.updateUser);
+router.put("/updatePassword/:id", userController.updatePassword);
 router.delete("/deleteUser/:id", userController.deleteUser);
 router.put("/blockUser/:id", userController.blockUser);
 router.put("/unblockUser/:id", userController.unblockUser);

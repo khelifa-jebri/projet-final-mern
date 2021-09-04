@@ -4,33 +4,11 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config({ path: "./config/.env" });
 
 module.exports = {
-    addNewUser(cin, firstName, lastName, password, date_of_birth, email, phone_number, gender, image, address_id, res) {
-        userModel.create({
-            cin,
-            firstName,
-            lastName,
-            password,
-            date_of_birth,
-            email,
-            phone_number,
-            gender,
-            image,
-            address_id
-        }, (err, data) => {
-            if (err) throw err;
-            else res.json({
-                status: 200,
-                message: "user added successfully.",
-                data: data
-            });
-        })
-    },
-
-    // registration
-    // @route   POST api/users/registerUser
-    // @desc    this route is for registering the user
-    // @access  Public
-    register(cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address_id, res) {
+    // Registration
+    // @Route   POST api/users/registerUser
+    // @Desc    this route is for registering the user
+    // @Access  Public
+    register(cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address, res) {
         userModel.findOne({ email: email }, (err, data) => {
             if (err) throw err;
             if (data !== null) res.status(409).json({ msg: "email already exists" });
@@ -50,7 +28,7 @@ module.exports = {
                             phone_number,
                             gender,
                             image,
-                            address_id
+                            address
                         }, (err, data) => {
                             if (err) throw err;
                             else res.json({
@@ -65,10 +43,10 @@ module.exports = {
         });
     },
 
-    // login
-    // @route   POST api/users/login
-    // @desc    this route is for the user sign in
-    // @access  Public
+    // Login
+    // @Route   POST api/users/login
+    // @Desc    this route is for the user sign in
+    // @Access  Public
     login(email, password, res) {
         userModel.findOne({ email: email })
             .then((user) => {
@@ -141,6 +119,50 @@ module.exports = {
             .catch(err => console.log(err))
     },
 
+    updatePassword(id, updatedPassword, res) {
+        console.log(typeof updatedPassword);
+        userModel.findById(id)
+            .then(data => {
+                bcrypt.compare(
+                    updatedPassword.actualPassword,
+                    data.password,
+                    (err, passwordMatch) => {
+                        if (err) throw err;
+                        if (passwordMatch === true) {
+                            if (updatedPassword.newPassword === updatedPassword.confirnNewPassword) {
+                                bcrypt.genSalt(10, (err, salt) => {
+                                    if (err) throw err;
+                                    bcrypt.hash(updatedPassword.newPassword, salt, (err, cryptedPassword) => {
+                                        if (err) throw err;
+                                        userModel.findByIdAndUpdate(id, { password: cryptedPassword }, (err, data) => {
+                                            if (err) throw err;
+                                            res.status(200).json({
+                                                status: 200,
+                                                msg: "Update password successfully...",
+                                                data
+                                            })
+                                        })
+                                    });
+                                });
+
+                            } else {
+                                res.status(400).json({
+                                    msg: "The new password and the confirm password are not the same"
+                                });
+                            }
+                        } else {
+                            res.status(400).json({
+                                status: 400,
+                                msg: "Wrong password !!",
+                            });
+                        }
+                    }
+                );
+            })
+            .catch(err => console.log(err));
+
+    },
+
     updateUser(id, updatedUser, res) {
         userModel.findByIdAndUpdate(id, updatedUser)
             .then(data =>
@@ -192,6 +214,4 @@ module.exports = {
                 console.log(err)
             );
     }
-
-
 }

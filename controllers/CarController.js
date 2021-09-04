@@ -1,7 +1,4 @@
-const carModel = require("../models/CarModel");
-const { deleteCar } = require("../services/CarService");
 const carService = require("../services/CarService");
-
 
 module.exports = {
     addCar(req, res) {

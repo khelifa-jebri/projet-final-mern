@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+//const Address = require("./Address")
 const user = {
     cin: {
         type: Number,
@@ -56,9 +56,8 @@ const user = {
         type: String,
     },
 
-    address_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'address'
+    address: {
+        type: Object,
     }
 };
 

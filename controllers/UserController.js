@@ -1,13 +1,9 @@
 const userService = require("../services/UserService");
 
 module.exports = {
-    addNewUser(req, res) {
-        const { cin, firstName, lastName, password, date_of_birth, email, phone_number, gender, image, address_id } = req.body;
-        userService.addNewUser(cin, firstName, lastName, password, date_of_birth, email, phone_number, gender, image, address_id, res);
-    },
     register(req, res) {
-        const { cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address_id } = req.body;
-        userService.register(cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address_id, res)
+        const { cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address } = req.body;
+        userService.register(cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address, res)
     },
     login(req, res) {
         const { email, password } = req.body;
@@ -31,6 +27,12 @@ module.exports = {
         const { id } = req.params;
         const updatedUser = {...req.body };
         userService.updateUser(id, updatedUser, res);
+    },
+
+    updatePassword(req, res) {
+        const { id } = req.params;
+        const updatedPassword = {...req.body };
+        userService.updatePassword(id, updatedPassword, res)
     },
 
     deleteUser(req, res) {

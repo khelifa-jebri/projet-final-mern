@@ -4,7 +4,8 @@ const agency = {
 
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     phone_number: {
@@ -19,12 +20,12 @@ const agency = {
     },
 
     director: {
-        type: String,
+        type: Object,
+        required: true
     },
 
-    address_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'address'
+    address: {
+        type: Object,
     }
 
 };
