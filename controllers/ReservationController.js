@@ -18,8 +18,10 @@ module.exports = {
 
     updateReservation(req, res) {
         const { id } = req.params;
-        const updatedReservation = {...req.body };
-        reservationService.updateReservation(id, updatedReservation, res);
+        const { start_date, end_date, car_id } = req.body;
+        let start_time = new Date(start_date);
+        let end_time = new Date(end_date);
+        reservationService.updateReservation(id, start_time, end_time, car_id, res);
     },
 
     acceptReservation(req, res) {

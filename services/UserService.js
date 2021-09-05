@@ -58,7 +58,7 @@ module.exports = {
                             if (err) throw err;
                             if (passwordMatch === true) {
                                 jwt.sign({ user },
-                                    process.env.SECRET_KEY,
+                                    process.env.SECRET_KEY, { expiresIn: '48h' },
                                     (err, token) => {
                                         if (err) throw err;
                                         res.status(200).json({

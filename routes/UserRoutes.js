@@ -12,7 +12,7 @@ router.post("/login", userController.login);
 router.get("/getAllUsers", extractToken, (req, res) => {
     jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
         if (err) throw err;
-        if (authData.user.role === "admin") {
+        if (authData.user.role === "admin" && authData.user.is_active === true) {
             userController.allUsers(req, res);
         } else {
             res.status(403).json({
@@ -26,7 +26,7 @@ router.get("/getAllUsers", extractToken, (req, res) => {
 router.get("/getUserById/:id", extractToken, (req, res) => {
     jwt.verify(req.token, process.env.SECRET_KEY, (err, authData) => {
         if (err) throw err;
-        if (authData) {
+        if (authData.user.is_active === true) {
             userController.userById(req, res);
         } else {
             res.status(403).json({

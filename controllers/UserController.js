@@ -5,10 +5,12 @@ module.exports = {
         const { cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address } = req.body;
         userService.register(cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address, res)
     },
+
     login(req, res) {
         const { email, password } = req.body;
         userService.login(email, password, res);
     },
+
     allUsers(req, res) {
         userService.findAllUsers(res);
     },
@@ -49,5 +51,4 @@ module.exports = {
         const { id } = req.params;
         userService.unblockUser(id, res);
     }
-
 }

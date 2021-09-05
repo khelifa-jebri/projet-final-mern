@@ -52,12 +52,12 @@ module.exports = {
             );
     },
 
-    updateReservation(id, updatedReservation, res) {
-        carModel.findById(updatedReservation.car_id, (err, data) => {
+    updateReservation(id, start_date, end_date, car_id, res) {
+        carModel.findById(car_id, (err, data) => {
             if (err) throw err;
-            let duration_of_reservation = ((new Date(updatedReservation.end_date).getTime() - new Date(updatedReservation.start_date).getTime()) / 3600000);
+            let duration_of_reservation = (end_date.getTime() - start_date.getTime()) / 3600000;
             let cost = duration_of_reservation * data.hour_price;
-            reservationModel.findByIdAndUpdate(id, {...updatedReservation, cost })
+            reservationModel.findByIdAndUpdate(id, { start_date, end_date, cost, car_id })
                 .then(data =>
                     res.status(200).json({
                         status: 200,
