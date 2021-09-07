@@ -1,9 +1,9 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, ListGroupItem, ListGroup } from "react-bootstrap";
 function CarCard({ car }) {
   return (
     <div>
-      <Card style={{ width: "18rem" }}>
+      <Card style={{ width: "18rem", margin: "auto" }}>
         <Card.Img
           variant="top"
           src="https://sf1.auto-moto.com/wp-content/uploads/sites/9/2016/12/ok-fiatpunto.jpg"
@@ -12,12 +12,22 @@ function CarCard({ car }) {
           <Card.Title>
             {car.mark} {car.model}
           </Card.Title>
-          <Card.Text>N° Immatriculation : {car.registration_number}</Card.Text>
-          <Card.Text>Puissance fiscale : {car.power}</Card.Text>
-          <Card.Text>Couleur : {car.color}</Card.Text>
-          <Card.Text>Carburant : {car.fuel_type}</Card.Text>
-          <Card.Text>Coût de la location /H: {car.hour_price}</Card.Text>
-          <Button variant="primary">Go somewhere</Button>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem>
+            N° Immatriculation : {car.registration_number}
+          </ListGroupItem>
+          <ListGroupItem>Puissance fiscale : {car.power}</ListGroupItem>
+          <ListGroupItem>Couleur : {car.color}</ListGroupItem>
+          <ListGroupItem>Carburant : {car.fuel_type}</ListGroupItem>
+          <ListGroupItem>
+            Coût de la location /H: {car.hour_price}
+          </ListGroupItem>
+          <ListGroupItem>Agence : {car.agency_id}</ListGroupItem>
+        </ListGroup>
+        <Card.Body>
+          <Card.Link href="#">Card Link</Card.Link>
+          <Card.Link href="#">Another Link</Card.Link>
         </Card.Body>
       </Card>
     </div>

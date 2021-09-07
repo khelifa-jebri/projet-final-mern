@@ -1,28 +1,17 @@
-import logo from "./logo.svg";
 import "./App.css";
 import CarsList from "./Components/CarsList/CarsList";
+import AddAgency from "./Components/AddAgency/AddAgency";
+import { Switch, Route } from "react-router-dom";
 
 function App() {
-    return ( < div className = "App" >
-        <
-        CarsList / > {
-            /* <header className="App-header">
-                                <img src={logo} className="App-logo" alt="logo" />
-                                <p>
-                                  Edit <code> src / App.js </code> and save to reload.{" "}
-                                </p>{" "}
-                                <a
-                                  className="App-link"
-                                  href="https://reactjs.org"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  Learn React{" "}
-                                </a>{" "}
-                              </header>{" "} */
-        } { " " } <
-        /div>
-    );
+  return (
+    <div>
+      <Switch>
+        <Route path="/allCars" render={() => <CarsList />} />
+        <Route path="/addAgency" render={() => <AddAgency />} />
+      </Switch>
+    </div>
+  );
 }
 
 export default App;
