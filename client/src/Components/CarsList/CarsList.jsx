@@ -6,20 +6,27 @@ import CarCard from "../CarCard/CarCard";
 import { FloatingLabel, Form } from "react-bootstrap";
 
 function CarsList() {
-  const [agency, setAgency] = useState({});
-
-  const selectedAgencyName = useRef("");
-
   const cars = useSelector((state) => state.carsReducer.cars);
   const agencies = useSelector((state) => state.agenciesReducer.agencies);
 
-  const handleChange = (e) => {
+  const [agency, setAgency] = useState({});
+  const [filtredCars, setFiltredCars] = useState({});
+
+  const selectedAgencyName = useRef("");
+
+  async function handleChange(e) {
     const agencyName = selectedAgencyName.current.value;
     console.log(agencyName);
 
-    setAgency({ ...agency, ...agencies.filter((a) => a.name === agencyName) });
-    console.log(agency);
-  };
+    const agencyAux = agencies.find((a) => a.name === agencyName);
+    setAgency(agencyAux);
+
+    for (let i = 0; i < cars.length; i++) {
+      if (cars[i].agency_id === agency._id) {
+        await setFiltredCars({...filtredCars, ...cars[i]});
+      }
+    }
+  }
 
   const dispatch = useDispatch();
 
@@ -42,6 +49,7 @@ function CarsList() {
             ref={selectedAgencyName}
             onChange={handleChange}
           >
+            <option>...</option>
             {agencies.map((agency) => (
               <option key={agency._id} value={agency.name}>
                 {agency.name}

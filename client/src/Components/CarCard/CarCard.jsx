@@ -23,7 +23,6 @@ function CarCard({ car }) {
           <ListGroupItem>
             Coût de la location /H: {car.hour_price}
           </ListGroupItem>
-          <ListGroupItem>Agence : {car.agency_id}</ListGroupItem>
         </ListGroup>
         <Card.Body>
           <Card.Link href="#">Card Link</Card.Link>

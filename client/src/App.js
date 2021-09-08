@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <Switch>
-        <Route path="/allCars" render={() => <CarsList />} />
+        <Route path="/" render={() => <CarsList />} />
         <Route path="/addAgency" render={() => <AddAgency />} />
       </Switch>
     </div>
