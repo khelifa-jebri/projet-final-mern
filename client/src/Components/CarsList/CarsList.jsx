@@ -10,22 +10,14 @@ function CarsList() {
   const agencies = useSelector((state) => state.agenciesReducer.agencies);
 
   const [agency, setAgency] = useState({});
-  const [filtredCars, setFiltredCars] = useState({});
 
   const selectedAgencyName = useRef("");
 
-  async function handleChange(e) {
-    const agencyName = selectedAgencyName.current.value;
-    console.log(agencyName);
-
-    const agencyAux = agencies.find((a) => a.name === agencyName);
+  function handleChange(e) {
+    const agencyAux = agencies.find(
+      (a) => a.name === selectedAgencyName.current.value
+    );
     setAgency(agencyAux);
-
-    for (let i = 0; i < cars.length; i++) {
-      if (cars[i].agency_id === agency._id) {
-        await setFiltredCars({...filtredCars, ...cars[i]});
-      }
-    }
   }
 
   const dispatch = useDispatch();
@@ -49,7 +41,7 @@ function CarsList() {
             ref={selectedAgencyName}
             onChange={handleChange}
           >
-            <option>...</option>
+            <option value="">...</option>
             {agencies.map((agency) => (
               <option key={agency._id} value={agency.name}>
                 {agency.name}
@@ -65,11 +57,16 @@ function CarsList() {
           flexWrap: "wrap",
         }}
       >
-        {cars
-          .filter((car) => car.is_available === true)
-          .map((car) => (
-            <CarCard key={car._id} car={car} />
-          ))}
+        {selectedAgencyName.current.value !== ""
+          ? cars
+              .filter(
+                (car) =>
+                  car.is_available === true && car.agency_id === agency._id
+              )
+              .map((car) => <CarCard key={car._id} car={car} />)
+          : cars
+              .filter((car) => car.is_available === true)
+              .map((car) => <CarCard key={car._id} car={car} />)}
       </div>
     </Fragment>
   );

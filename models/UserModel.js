@@ -54,8 +54,13 @@ const user = {
 
     image: {
         type: String,
+        default: "img"
     },
 
+    creation_date: {
+        type: Date,
+        default: Date.now(),
+    },
     address: {
         type: Object,
     }

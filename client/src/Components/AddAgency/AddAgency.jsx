@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { Regions } from "../../Constantes/Regions";
+import { Regions } from "../../utils/regions";
 import { useDispatch } from "react-redux";
 import { addAgency } from "../../redux/actions/agenciesActions";
 

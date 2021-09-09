@@ -2,8 +2,8 @@ const userService = require("../services/UserService");
 
 module.exports = {
     register(req, res) {
-        const { cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address } = req.body;
-        userService.register(cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, image, address, res)
+        const { cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, address } = req.body;
+        userService.register(cin, firstName, lastName, password, password_confirm, date_of_birth, email, phone_number, gender, address, res)
     },
 
     login(req, res) {
