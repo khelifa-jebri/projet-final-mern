@@ -9,8 +9,8 @@ export const Regions = [
   "Siliana",
   "Bizerte",
   "Nabeul",
-  "Zagouan", 
-  "Sousse", 
+  "Zagouan",
+  "Sousse",
   "Monastir",
   "Mahdia",
   "Kairaouene",
@@ -22,5 +22,7 @@ export const Regions = [
   "Gafsa",
   "Touzeu",
   "Kbéli",
-  "Tataouine"
+  "Tataouine",
 ];
+
+export const SECRET_KEY = "GoMyCode";

@@ -1,6 +1,9 @@
 import React from "react";
 import { Card, ListGroupItem, ListGroup } from "react-bootstrap";
-function CarCard({ car }) {
+import ReserveCar from "../ReserveCar/ReserveCar";
+
+function CarCard({ car, user }) {
+
   return (
     <div>
       <Card style={{ width: "18rem", margin: "auto" }}>
@@ -25,7 +28,7 @@ function CarCard({ car }) {
           </ListGroupItem>
         </ListGroup>
         <Card.Body>
-          <Card.Link href="#">Card Link</Card.Link>
+          <ReserveCar car={car} user={user}/>
           <Card.Link href="#">Another Link</Card.Link>
         </Card.Body>
       </Card>

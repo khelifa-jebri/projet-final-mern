@@ -4,8 +4,16 @@ import { getCars } from "../../redux/actions/carsActions";
 import { getAgencies } from "../../redux/actions/agenciesActions";
 import CarCard from "../CarCard/CarCard";
 import { FloatingLabel, Form } from "react-bootstrap";
+import jwt from "jsonwebtoken";
+import {SECRET_KEY} from "../../utils/regions";
 
 function CarsList() {
+  let user = {};
+  jwt.verify(localStorage.getItem("JWT"), SECRET_KEY, (err, data) => {
+    if (err) throw err;
+    user = data.user;
+  });
+
   const cars = useSelector((state) => state.carsReducer.cars);
   const agencies = useSelector((state) => state.agenciesReducer.agencies);
 
@@ -63,10 +71,10 @@ function CarsList() {
                 (car) =>
                   car.is_available === true && car.agency_id === agency._id
               )
-              .map((car) => <CarCard key={car._id} car={car} />)
+              .map((car) => <CarCard key={car._id} car={car} user={user}/>)
           : cars
               .filter((car) => car.is_available === true)
-              .map((car) => <CarCard key={car._id} car={car} />)}
+              .map((car) => <CarCard key={car._id} car={car} user={user} />)}
       </div>
     </Fragment>
   );

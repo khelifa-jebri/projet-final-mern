@@ -6,6 +6,7 @@ import UserSignUp from "./Components/UserSignUp/UserSignUp";
 import UserLogin from "./Components/UserLogin/UserLogin";
 import BackOffice from "./Components/Layout/BackOffice";
 import FrontOffice from "./Components/Layout/FrontOffice";
+import ReservationsList from "./Components/ReservationsList/ReservationsList";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact  path="/adminOffice" render={() => <BackOffice />} />
         <Route exact  path="/clientOffice" render={() => <FrontOffice />} />
         <Route exact  path="/carsList" render={() => <CarsList />} />
+        <Route exact  path="/reservationsList" render={() => <ReservationsList />} />
         <Route exact  path="/" render={() => <UserLogin />} />
       </Switch>
     </div>

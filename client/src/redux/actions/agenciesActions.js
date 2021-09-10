@@ -11,8 +11,8 @@ export const getAgencies = () => (dispatch) => {
 };
 
 export const addAgency = (payload) => (dispatch) => {
-    axios
-      .post("/api/agencies/addNewAgency", payload.newAgency)
-      .then(() => dispatch(getAgencies()))
-      .catch((err) => console.log(err));
-  };
+  axios
+    .post("/api/agencies/addNewAgency", payload.newAgency)
+    .then(() => dispatch(getAgencies()))
+    .catch((err) => console.log(err));
+};

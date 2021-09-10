@@ -2,10 +2,17 @@ import { GET_RESERVATIONS } from "../constants/actions-types";
 import axios from "axios";
 
 export const getReservations = () => (dispatch) => {
-    axios
-        .get("/api/reservations/allReservations")
-        .then((response) =>
-            dispatch({ type: GET_RESERVATIONS, payload: response.data })
-        )
-        .catch((err) => console.log(err));
+  axios
+    .get("/api/reservations/allReservations")
+    .then((response) =>
+      dispatch({ type: GET_RESERVATIONS, payload: response.data })
+    )
+    .catch((err) => console.log(err));
+};
+
+export const addReservation = (payload) => (dispatch) => {
+  axios
+    .post("/api/reservations/addReservation", payload.newRreservation)
+    .then(() => dispatch(getReservations()))
+    .catch((err) => console.log(err));
 };

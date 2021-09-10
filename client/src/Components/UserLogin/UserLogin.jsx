@@ -22,13 +22,13 @@ function UserLogin() {
           .then((response) => {
             response.data.data.role === "admin"
               ? history.push("/adminOffice")
-              : history.push("/clientOffice");
+              : history.push("/carsList");
           })
           .catch((err) => alert(err.response.data.msg));
       })
-      .catch((err) => 
+      .catch((err) => (
         <Alert variant="danger"> {err.response.data.msg} </Alert>
-      );
+      ));
   };
 
   return (

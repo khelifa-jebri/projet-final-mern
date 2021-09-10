@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Regions } from "../../utils/regions";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import "./UserSignUp.css";
 
@@ -9,6 +10,8 @@ function UserSignUp() {
 
   const [userInf, setUserInf] = useState({});
   const [address, setAddress] = useState({});
+
+  const history = useHistory();
 
   const handleChangeUserInf = (e) => {
     setUserInf({ ...userInf, [e.target.name]: e.target.value });
@@ -25,6 +28,7 @@ function UserSignUp() {
       .post("/api/users/registerUser", user)
       .then(() => alert("Registration successfully ..."))
       .catch((err) => alert("Registration Failed ..."));
+    history.push("/");
   };
 
   return (
