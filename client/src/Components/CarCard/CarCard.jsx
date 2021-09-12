@@ -3,7 +3,6 @@ import { Card, ListGroupItem, ListGroup } from "react-bootstrap";
 import ReserveCar from "../ReserveCar/ReserveCar";
 
 function CarCard({ car, user }) {
-
   return (
     <div>
       <Card style={{ width: "18rem", margin: "auto" }}>
@@ -26,9 +25,14 @@ function CarCard({ car, user }) {
           <ListGroupItem>
             Coût de la location /H: {car.hour_price}
           </ListGroupItem>
+          {car.is_available === true ? (
+            <ListGroupItem> Disponible : Oui </ListGroupItem>
+          ) : (
+            <ListGroupItem> Disponible : Nom </ListGroupItem>
+          )}
         </ListGroup>
         <Card.Body>
-          <ReserveCar car={car} user={user}/>
+          <ReserveCar car={car} user={user} />
           <Card.Link href="#">Another Link</Card.Link>
         </Card.Body>
       </Card>

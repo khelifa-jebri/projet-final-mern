@@ -72,7 +72,7 @@ module.exports = {
     },
 
     acceptReservation(id, res) {
-        reservationModel.findByIdAndUpdate(id, { state: "Accepted" })
+        reservationModel.findByIdAndUpdate(id, { state: "in_progress" })
             .then(data =>
                 res.status(200).json({
                     status: 200,
@@ -85,11 +85,24 @@ module.exports = {
     },
 
     refuseReservation(id, res) {
-        reservationModel.findByIdAndUpdate(id, { state: "Refused" })
+        reservationModel.findByIdAndUpdate(id, { state: "refused" })
             .then(data =>
                 res.status(200).json({
                     status: 200,
                     message: "The refused reservation ...",
+                    data: data
+                }))
+            .catch(err =>
+                console.log(err)
+            );
+    },
+
+    terminateReservation(id, res) {
+        reservationModel.findByIdAndUpdate(id, { state: "terminated" })
+            .then(data =>
+                res.status(200).json({
+                    status: 200,
+                    message: "The terminated reservation ...",
                     data: data
                 }))
             .catch(err =>

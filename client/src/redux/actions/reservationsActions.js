@@ -16,3 +16,33 @@ export const addReservation = (payload) => (dispatch) => {
     .then(() => dispatch(getReservations()))
     .catch((err) => console.log(err));
 };
+
+export const accepteReservation = (payload) => (dispatch) => {
+  axios
+    .put(`/api/reservations/acceptReservation/${payload.id}`)
+    .then(() => {
+      dispatch(getReservations());
+      console.log("From store action", payload.id);
+    })
+    .catch((err) => console.log(err));
+};
+
+export const refuseReservation = (payload) => (dispatch) => {
+  axios
+    .put(`/api/reservations/refuseReservation/${payload.id}`)
+    .then(() => {
+      dispatch(getReservations());
+      console.log("From store action", payload.id);
+    })
+    .catch((err) => console.log(err));
+};
+
+export const terminateReservation = (payload) => (dispatch) => {
+  axios
+    .put(`/api/reservations/terminateReservation/${payload.id}`)
+    .then(() => {
+      dispatch(getReservations());
+      console.log("From store action", payload.id);
+    })
+    .catch((err) => console.log(err));
+};

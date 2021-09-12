@@ -34,6 +34,11 @@ module.exports = {
         reservationService.refuseReservation(id, res);
     },
 
+    terminateReservation(req, res) {
+        const { id } = req.params;
+        reservationService.terminateReservation(id, res);
+    },
+
     deleteReservation(req, res) {
         const { id } = req.params;
         reservationService.deleteReservation(id, res);

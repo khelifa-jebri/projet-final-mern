@@ -14,7 +14,7 @@ const reservation = {
 
     state: {
         type: String,
-        default: "In progress"
+        default: "in_waiting"
     },
 
     cost: {

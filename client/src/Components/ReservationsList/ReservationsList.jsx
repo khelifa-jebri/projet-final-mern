@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCars } from "../../redux/actions/carsActions";
-import { getReservations } from "../../redux/actions/reservationsActions";
+import {
+  getReservations,
+  accepteReservation,
+  refuseReservation,
+  terminateReservation,
+} from "../../redux/actions/reservationsActions";
 import { getUsers } from "../../redux/actions/usersActions";
-import { FloatingLabel, Form, Table } from "react-bootstrap";
+import { FloatingLabel, Form, Table, Button } from "react-bootstrap";
 
 function ReservationsList() {
   const selectedReservationState = useRef("");
@@ -12,10 +17,26 @@ function ReservationsList() {
   const reservations = useSelector(
     (state) => state.reservationsReducer.reservations
   );
+
   const cars = useSelector((state) => state.carsReducer.cars);
   const users = useSelector((state) => state.usersReducer.users);
 
   const dispatch = useDispatch();
+
+  const handleAccepte = (reservation_id) => {
+    console.log("From Component", reservation_id);
+    dispatch(accepteReservation({ id: reservation_id }));
+  };
+
+  const handleRefuse = (reservation_id) => {
+    console.log("From Component", reservation_id);
+    dispatch(refuseReservation({ id: reservation_id }));
+  };
+
+  const handleTerminate = (reservation_id) => {
+    console.log("From Component", reservation_id);
+    dispatch(terminateReservation({ id: reservation_id }));
+  };
 
   const handleChange = () => {
     let arrayReservation = [];
@@ -23,13 +44,13 @@ function ReservationsList() {
       const user = users.find((user) => user._id === reservation.client_id);
       const car = cars.find((car) => car._id === reservation.car_id);
       const reservationInf = {
-        cin_client: user.cin,
         nom_client: user.firstName,
         prenom_client: user.lastName,
         phone_client: user.phone_number,
         mat_car: car.registration_number,
         mark_car: car.mark,
         model_car: car.model,
+        reservation_id: reservation._id,
         reservation_date_debut: reservation.start_date,
         reservation_date_fin: reservation.end_date,
         reservation_state: reservation.state,
@@ -37,6 +58,7 @@ function ReservationsList() {
       };
       arrayReservation.push(reservationInf);
     });
+    // eslint-disable-next-line
     setReservationsInf(arrayReservation);
   };
 
@@ -59,16 +81,16 @@ function ReservationsList() {
           onChange={handleChange}
         >
           <option value="">...</option>
-          <option value="In progress">En cours</option>
-          <option value="Accepted">Acceptée</option>
-          <option value="Refused">Refusée</option>
+          <option value="in_waiting">En attente</option>
+          <option value="in_progress">En cours</option>
+          <option value="terminated">Terminée</option>
+          <option value="refused">Refusée</option>
         </Form.Select>
       </FloatingLabel>
       <br />
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>CIN</th>
             <th>Nom</th>
             <th>Prenom</th>
             <th>N° Tel</th>
@@ -79,13 +101,13 @@ function ReservationsList() {
             <th>Date de fin</th>
             <th>Etat</th>
             <th>Cout</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {selectedReservationState.current.value === ""
             ? reservationsInf.map((r) => (
-                <tr key={Math.random()}>
-                  <td>{r.cin_client}</td>
+                <tr key={r.reservation_id}>
                   <td>{r.nom_client}</td>
                   <td>{r.prenom_client}</td>
                   <td>{r.phone_client}</td>
@@ -95,7 +117,34 @@ function ReservationsList() {
                   <td>{r.reservation_date_debut}</td>
                   <td>{r.reservation_date_fin}</td>
                   <td>{r.reservation_state}</td>
-                  <td>{r.reservation_cost}</td>
+                  <td>{r.reservation_cost} DT</td>
+                  {r.reservation_state === "in_waiting" ? (
+                    <td>
+                      <Button
+                        variant="outline-primary"
+                        onClick={handleAccepte(r.reservation_id)}
+                      >
+                        Accepter
+                      </Button>
+                      <Button
+                        variant="outline-danger"
+                        onClick={handleRefuse(r.reservation_id)}
+                      >
+                        Refuser
+                      </Button>
+                    </td>
+                  ) : r.reservation_state === "in_progress" ? (
+                    <td>
+                      <Button
+                        variant="outline-success"
+                        onClick={handleTerminate(r.reservation_id)}
+                      >
+                        Terminer
+                      </Button>
+                    </td>
+                  ) : (
+                    <td> </td>
+                  )}
                 </tr>
               ))
             : reservationsInf
@@ -105,8 +154,7 @@ function ReservationsList() {
                     selectedReservationState.current.value
                 )
                 .map((r) => (
-                  <tr key={Math.random()}>
-                    <td>{r.cin_client}</td>
+                  <tr key={r.reservation_id}>
                     <td>{r.nom_client}</td>
                     <td>{r.prenom_client}</td>
                     <td>{r.phone_client}</td>
@@ -116,7 +164,34 @@ function ReservationsList() {
                     <td>{r.reservation_date_debut}</td>
                     <td>{r.reservation_date_fin}</td>
                     <td>{r.reservation_state}</td>
-                    <td>{r.reservation_cost}</td>
+                    <td>{r.reservation_cost} DT</td>
+                    {r.reservation_state === "in_waiting" ? (
+                      <td>
+                        <Button
+                          variant="outline-primary"
+                          onClick={handleAccepte(r.reservation_id)}
+                        >
+                          Accepter
+                        </Button>
+                        <Button
+                          variant="outline-danger"
+                          onClick={handleRefuse(r.reservation_id)}
+                        >
+                          Refuser
+                        </Button>
+                      </td>
+                    ) : r.reservation_state === "in_progress" ? (
+                      <td>
+                        <Button
+                          variant="outline-success"
+                          onClick={handleTerminate(r.reservation_id)}
+                        >
+                          Terminer
+                        </Button>
+                      </td>
+                    ) : (
+                      <td> </td>
+                    )}
                   </tr>
                 ))}
         </tbody>
