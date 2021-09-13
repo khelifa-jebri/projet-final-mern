@@ -40,6 +40,7 @@ function ReservationsList() {
 
   const handleChange = () => {
     let arrayReservation = [];
+    // eslint-disable-next-line
     reservations.map((reservation) => {
       const user = users.find((user) => user._id === reservation.client_id);
       const car = cars.find((car) => car._id === reservation.car_id);
@@ -58,7 +59,6 @@ function ReservationsList() {
       };
       arrayReservation.push(reservationInf);
     });
-    // eslint-disable-next-line
     setReservationsInf(arrayReservation);
   };
 

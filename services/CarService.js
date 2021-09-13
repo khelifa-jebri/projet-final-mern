@@ -51,7 +51,7 @@ module.exports = {
             .then(data =>
                 res.status(200).json({
                     status: 200,
-                    message: "Updated Car : ",
+                    msg: "Updated Car successfully ",
                     data
                 }))
             .catch(err =>

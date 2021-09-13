@@ -25,7 +25,7 @@ function UserSignUp() {
     const user = { ...userInf, address };
     console.log(user.password);
     axios
-      .post("/api/users/registerUser", user)
+  .post("/api/users/registerUser", user)
       .then(() => alert("Registration successfully ..."))
       .catch((err) => alert("Registration Failed ..."));
     history.push("/");
