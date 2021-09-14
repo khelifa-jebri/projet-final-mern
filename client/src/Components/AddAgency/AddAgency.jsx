@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import "./AddAgency.css";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Regions } from "../../utils/regions";
 import { useDispatch } from "react-redux";
@@ -24,7 +25,7 @@ function AddAgency() {
     setAgencyInf({ ...agencyInf, [e.target.name]: e.target.value });
   };
 
-  const handleChangeDirector = (e) => {
+  const handleChangeDirector = () => {
     setDirector({
       ...director,
       fullName: directorName.current.value,
@@ -55,8 +56,8 @@ function AddAgency() {
   };
 
   return (
-    <div style={{ margin: "5%" }}>
-      <Form>
+    <div className="AddAgencyForm">
+      <Form className="formContainer">
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridName">
             <Form.Label>Nom de l'agence</Form.Label>
@@ -65,7 +66,7 @@ function AddAgency() {
               placeholder="Entrez le nom de l'agence svp"
               name="name"
               required={true}
-              autoComplete="on"
+              autoComplete="name"
               onChange={handleChangeAgencyInf}
             />
           </Form.Group>
@@ -77,7 +78,7 @@ function AddAgency() {
               placeholder="98000001"
               name="phone_number"
               required={true}
-              autoComplete="on"
+              autoComplete="phone_number"
               onChange={handleChangeAgencyInf}
             />
           </Form.Group>
@@ -88,7 +89,7 @@ function AddAgency() {
               type="email"
               placeholder="example@example.com"
               name="email"
-              autoComplete="on"
+              autoComplete="email"
               onChange={handleChangeAgencyInf}
             />
           </Form.Group>
@@ -97,13 +98,21 @@ function AddAgency() {
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridAddress">
             <Form.Label>N° Rue</Form.Label>
-            <Form.Control type="number" ref={addressNumber} />
+            <Form.Control
+              type="number"
+              name="number"
+              autoComplete="number"
+              placeholder="Entrer le numéro svp"
+              ref={addressNumber}
+            />
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridAddressStreet">
             <Form.Label>Rue</Form.Label>
             <Form.Control
               type="text"
+              name="street"
+              autoComplete="street"
               placeholder="Entrez le rue svp"
               ref={addressStreet}
             />
@@ -130,8 +139,10 @@ function AddAgency() {
             <Form.Label>Code postale</Form.Label>
             <Form.Control
               type="number"
+              name="postal_code"
+              placeholder="Entrez le code postale svp"
               ref={addressPostalCode}
-              autoComplete="on"
+              autoComplete="postal_code"
               onChange={handleChangeAddress}
             />
           </Form.Group>
@@ -142,10 +153,11 @@ function AddAgency() {
             <Form.Label>Nom du directeur</Form.Label>
             <Form.Control
               type="text"
+              name="full_Name"
               placeholder="Entrez le nom du directeur svp"
               required={true}
               ref={directorName}
-              autoComplete="on"
+              autoComplete="full_Name"
               onChange={handleChangeDirector}
             />
           </Form.Group>
@@ -165,9 +177,11 @@ function AddAgency() {
             <Form.Label>Numéro de téléphone du directeur</Form.Label>
             <Form.Control
               type="number"
+              name="director_phone"
               placeholder="98000001"
+              required={true}
               ref={directorPhone}
-              autoComplete="on"
+              autoComplete="director_phone"
               onChange={handleChangeDirector}
             />
           </Form.Group>

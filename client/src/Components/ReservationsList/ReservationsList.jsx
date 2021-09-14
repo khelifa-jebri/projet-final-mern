@@ -71,89 +71,43 @@ function ReservationsList() {
 
   return (
     <div style={{ margin: "5%" }}>
-      <FloatingLabel
-        controlId="floatingSelect"
-        label="Choisissez l'état de la réservation"
-      >
-        <Form.Select
-          aria-label="Floating label select example"
-          ref={selectedReservationState}
-          onChange={handleChange}
+      <Form>
+        <FloatingLabel
+          controlId="floatingSelect"
+          label="Choisissez l'état de la réservation"
         >
-          <option value="">...</option>
-          <option value="in_waiting">En attente</option>
-          <option value="in_progress">En cours</option>
-          <option value="terminated">Terminée</option>
-          <option value="refused">Refusée</option>
-        </Form.Select>
-      </FloatingLabel>
-      <br />
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>N° Tel</th>
-            <th>N° Matriculation</th>
-            <th>Marque</th>
-            <th>Modéle</th>
-            <th>Date de début</th>
-            <th>Date de fin</th>
-            <th>Etat</th>
-            <th>Cout</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {selectedReservationState.current.value === ""
-            ? reservationsInf.map((r) => (
-                <tr key={r.reservation_id}>
-                  <td>{r.nom_client}</td>
-                  <td>{r.prenom_client}</td>
-                  <td>{r.phone_client}</td>
-                  <td>{r.mat_car}</td>
-                  <td>{r.mark_car}</td>
-                  <td>{r.model_car}</td>
-                  <td>{r.reservation_date_debut}</td>
-                  <td>{r.reservation_date_fin}</td>
-                  <td>{r.reservation_state}</td>
-                  <td>{r.reservation_cost} DT</td>
-                  {r.reservation_state === "in_waiting" ? (
-                    <td>
-                      <Button
-                        variant="outline-primary"
-                        onClick={handleAccepte(r.reservation_id)}
-                      >
-                        Accepter
-                      </Button>
-                      <Button
-                        variant="outline-danger"
-                        onClick={handleRefuse(r.reservation_id)}
-                      >
-                        Refuser
-                      </Button>
-                    </td>
-                  ) : r.reservation_state === "in_progress" ? (
-                    <td>
-                      <Button
-                        variant="outline-success"
-                        onClick={handleTerminate(r.reservation_id)}
-                      >
-                        Terminer
-                      </Button>
-                    </td>
-                  ) : (
-                    <td> </td>
-                  )}
-                </tr>
-              ))
-            : reservationsInf
-                .filter(
-                  (r) =>
-                    r.reservation_state ===
-                    selectedReservationState.current.value
-                )
-                .map((r) => (
+          <Form.Select
+            aria-label="Floating label select example"
+            ref={selectedReservationState}
+            onChange={handleChange}
+          >
+            <option value="">...</option>
+            <option value="in_waiting">En attente</option>
+            <option value="in_progress">En cours</option>
+            <option value="terminated">Terminée</option>
+            <option value="refused">Refusée</option>
+          </Form.Select>
+        </FloatingLabel>
+        <br />
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Prenom</th>
+              <th>N° Tel</th>
+              <th>N° Matriculation</th>
+              <th>Marque</th>
+              <th>Modéle</th>
+              <th>Date de début</th>
+              <th>Date de fin</th>
+              <th>Etat</th>
+              <th>Cout</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {selectedReservationState.current.value === ""
+              ? reservationsInf.map((r) => (
                   <tr key={r.reservation_id}>
                     <td>{r.nom_client}</td>
                     <td>{r.prenom_client}</td>
@@ -193,9 +147,57 @@ function ReservationsList() {
                       <td> </td>
                     )}
                   </tr>
-                ))}
-        </tbody>
-      </Table>
+                ))
+              : reservationsInf
+                  .filter(
+                    (r) =>
+                      r.reservation_state ===
+                      selectedReservationState.current.value
+                  )
+                  .map((r) => (
+                    <tr key={r.reservation_id}>
+                      <td>{r.nom_client}</td>
+                      <td>{r.prenom_client}</td>
+                      <td>{r.phone_client}</td>
+                      <td>{r.mat_car}</td>
+                      <td>{r.mark_car}</td>
+                      <td>{r.model_car}</td>
+                      <td>{r.reservation_date_debut}</td>
+                      <td>{r.reservation_date_fin}</td>
+                      <td>{r.reservation_state}</td>
+                      <td>{r.reservation_cost} DT</td>
+                      {r.reservation_state === "in_waiting" ? (
+                        <td>
+                          <Button
+                            variant="outline-primary"
+                            onClick={handleAccepte(r.reservation_id)}
+                          >
+                            Accepter
+                          </Button>
+                          <Button
+                            variant="outline-danger"
+                            onClick={handleRefuse(r.reservation_id)}
+                          >
+                            Refuser
+                          </Button>
+                        </td>
+                      ) : r.reservation_state === "in_progress" ? (
+                        <td>
+                          <Button
+                            variant="outline-success"
+                            onClick={handleTerminate(r.reservation_id)}
+                          >
+                            Terminer
+                          </Button>
+                        </td>
+                      ) : (
+                        <td> </td>
+                      )}
+                    </tr>
+                  ))}
+          </tbody>
+        </Table>
+      </Form>
     </div>
   );
 }

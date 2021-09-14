@@ -23,12 +23,14 @@ function UserSignUp() {
 
   const handleSubmit = () => {
     const user = { ...userInf, address };
-    console.log(user.password);
+    console.log(user);
     axios
-  .post("/api/users/registerUser", user)
-      .then(() => alert("Registration successfully ..."))
-      .catch((err) => alert("Registration Failed ..."));
-    history.push("/");
+      .post("/api/users/registerUser", user)
+      .then((response) => {
+        alert(response.data.msg);
+        history.push("/");
+      })
+      .catch((err) => alert(err.response.data.msg));
   };
 
   return (
@@ -78,6 +80,7 @@ function UserSignUp() {
             <Form.Control
               type="date"
               name="date_of_birth"
+              required={true}
               autoComplete="date_of_birth"
               onChange={handleChangeUserInf}
             />
@@ -153,7 +156,7 @@ function UserSignUp() {
             <Form.Label>N° Rue</Form.Label>
             <Form.Control
               type="number"
-              placeholder="Entrez le numéro"
+              placeholder="Entrez le numéro svp"
               name="number"
               autoComplete="number"
               onChange={handleChangeAddress}
@@ -179,6 +182,7 @@ function UserSignUp() {
               autoComplete="regin"
               onChange={handleChangeAddress}
             >
+              <option value="">--------</option>
               {regions
                 .sort((a, b) => a.localeCompare(b))
                 .map((region) => (
@@ -193,6 +197,7 @@ function UserSignUp() {
             <Form.Label>Code postale</Form.Label>
             <Form.Control
               type="number"
+              placeholder="Entrez le code postale svp"
               name="postal_code"
               autoComplete="on"
               onChange={handleChangeAddress}
