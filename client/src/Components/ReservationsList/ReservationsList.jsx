@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCars } from "../../redux/actions/carsActions";
-import {
-  getReservations,
-  accepteReservation,
-  refuseReservation,
-  terminateReservation,
-} from "../../redux/actions/reservationsActions";
+import { getReservations } from "../../redux/actions/reservationsActions";
 import { getUsers } from "../../redux/actions/usersActions";
-import { FloatingLabel, Form, Table, Button } from "react-bootstrap";
+import { FloatingLabel, Form, Table } from "react-bootstrap";
+import ReservationItem from "../ReservationItem/ReservationItem";
 
 function ReservationsList() {
   const selectedReservationState = useRef("");
@@ -22,21 +18,6 @@ function ReservationsList() {
   const users = useSelector((state) => state.usersReducer.users);
 
   const dispatch = useDispatch();
-
-  const handleAccepte = (reservation_id) => {
-    console.log("From Component", reservation_id);
-    dispatch(accepteReservation({ id: reservation_id }));
-  };
-
-  const handleRefuse = (reservation_id) => {
-    console.log("From Component", reservation_id);
-    dispatch(refuseReservation({ id: reservation_id }));
-  };
-
-  const handleTerminate = (reservation_id) => {
-    console.log("From Component", reservation_id);
-    dispatch(terminateReservation({ id: reservation_id }));
-  };
 
   const handleChange = () => {
     let arrayReservation = [];
@@ -107,6 +88,25 @@ function ReservationsList() {
           </thead>
           <tbody>
             {selectedReservationState.current.value === ""
+              ? reservationsInf.map((reservation) => (
+                  <ReservationItem
+                    reservation={reservation}
+                    key={reservation.reservation_id}
+                  />
+                ))
+              : reservationsInf
+                  .filter(
+                    (reservation) =>
+                      reservation.reservation_state ===
+                      selectedReservationState.current.value
+                  )
+                  .map((reservation) => (
+                    <ReservationItem
+                      reservation={reservation}
+                      key={reservation.reservation_id}
+                    />
+                  ))}
+            {/* {selectedReservationState.current.value === ""
               ? reservationsInf.map((r) => (
                   <tr key={r.reservation_id}>
                     <td>{r.nom_client}</td>
@@ -194,7 +194,7 @@ function ReservationsList() {
                         <td> </td>
                       )}
                     </tr>
-                  ))}
+                  ))} */}
           </tbody>
         </Table>
       </Form>

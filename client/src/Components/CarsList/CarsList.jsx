@@ -5,7 +5,7 @@ import { getAgencies } from "../../redux/actions/agenciesActions";
 import CarCard from "../CarCard/CarCard";
 import { FloatingLabel, Form } from "react-bootstrap";
 import jwt from "jsonwebtoken";
-import {SECRET_KEY} from "../../utils/regions";
+import { SECRET_KEY } from "../../utils/regions";
 
 function CarsList() {
   let user = {};
@@ -19,14 +19,20 @@ function CarsList() {
 
   const [agency, setAgency] = useState({});
 
+  const [markFilter, setMarFilter] = useState("");
+
   const selectedAgencyName = useRef("");
 
-  function handleChange(e) {
+  function handleChange() {
     const agencyAux = agencies.find(
       (a) => a.name === selectedAgencyName.current.value
     );
     setAgency(agencyAux);
   }
+
+  const handleChangeMark = (e) => {
+    setMarFilter(e.target.value);
+  };
 
   const dispatch = useDispatch();
 
@@ -40,23 +46,31 @@ function CarsList() {
     <Fragment>
       <div style={{ margin: "20px", width: "30%" }}>
         <h1>The Cars list</h1>
-        <FloatingLabel
-          controlId="floatingSelect"
-          label="Choisissez l'agence SVP"
-        >
-          <Form.Select
-            aria-label="Floating label select example"
-            ref={selectedAgencyName}
-            onChange={handleChange}
+
+        <Form>
+          <FloatingLabel
+            controlId="floatingSelect"
+            label="Choisissez l'agence SVP"
           >
-            <option value="">...</option>
-            {agencies.map((agency) => (
-              <option key={agency._id} value={agency.name}>
-                {agency.name}
-              </option>
-            ))}
-          </Form.Select>
-        </FloatingLabel>
+            <Form.Select
+              aria-label="Floating label select example"
+              ref={selectedAgencyName}
+              onChange={handleChange}
+            >
+              <option value="">...</option>
+              {agencies.map((agency) => (
+                <option key={agency._id} value={agency.name}>
+                  {agency.name}
+                </option>
+              ))}
+            </Form.Select>
+          </FloatingLabel>
+
+          <Form.Group controlId="carMarkId">
+            <Form.Label>Marque de la voiture</Form.Label>
+            <Form.Control type="text" onChange={handleChangeMark} />
+          </Form.Group>
+        </Form>
       </div>
       <div
         style={{
@@ -69,11 +83,19 @@ function CarsList() {
           ? cars
               .filter(
                 (car) =>
-                  car.is_available === true && car.agency_id === agency._id
+                  car.is_available === true &&
+                  car.agency_id === agency._id &&
+                  (car.mark.includes(markFilter) ||
+                    car.model.includes(markFilter))
               )
-              .map((car) => <CarCard key={car._id} car={car} user={user}/>)
+              .map((car) => <CarCard key={car._id} car={car} user={user} />)
           : cars
-              .filter((car) => car.is_available === true)
+              .filter(
+                (car) =>
+                  car.is_available === true &&
+                  (car.mark.includes(markFilter) ||
+                    car.model.includes(markFilter))
+              )
               .map((car) => <CarCard key={car._id} car={car} user={user} />)}
       </div>
     </Fragment>
