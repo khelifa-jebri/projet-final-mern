@@ -1,0 +1,17 @@
+.AddAgencyForm {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 2%;
+  }
+  .formContainer {
+    background-image: url("https://d1csarkz8obe9u.cloudfront.net/posterpreviews/zoom-background-template-design-002cc5a90615130ec4858f4b0505d468_screen.jpg?ts=1610889250");
+    border-radius: 7px;
+    border: 2px black solid;
+    padding: 3%;
+    color: white;
+  }
+  .loginLink {
+    color: white;
+  }

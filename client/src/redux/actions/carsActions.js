@@ -8,6 +8,16 @@ export const getCars = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const addCar = (payload) => (dispatch) => {
+  axios
+    .post("/api/cars/addNewCar", payload.newCar)
+    .then(() => {
+      console.log("hello in ...");
+      dispatch(getCars());
+    })
+    .catch((err) => console.log(err));
+};
+
 export const editCar = (payload) => (dispatch) => {
   axios
     .put(`/api/cars/updateCar/${payload.id}`, payload.updatedCar)

@@ -34,7 +34,7 @@ function AddAgency() {
     });
   };
 
-  const handleChangeAddress = (e) => {
+  const handleChangeAddress = () => {
     setAddress({
       ...address,
       number: addressNumber.current.value,
