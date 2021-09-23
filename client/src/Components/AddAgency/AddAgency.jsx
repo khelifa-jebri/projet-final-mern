@@ -187,7 +187,7 @@ function AddAgency() {
           </Form.Group>
         </Row>
 
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
+        <Button variant="primary" onClick={handleSubmit}>
           Ajouter une agence
         </Button>
       </Form>

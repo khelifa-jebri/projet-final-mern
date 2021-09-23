@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef} from "react";
 import "./AddCar.css";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,43 +10,39 @@ function AddCar() {
   const ON_CHANGE = "ON_CHANGE";
   const ON_CHANGE_AGENCY_NAME = "ON_CHANGE_AGENCY_NAME";
 
-  const agenceName = useRef("");
-
-  const retreiveAgencyIdByName = async () => {
-    await axios
-      .get(`/api/agencies/getAgencyByName/${agenceName.current.value}`)
-      .then((response) => {
-        return response.data.data._id;
-      })
-      .catch((err) => alert(err.response.data.msg));
-    return null;
-  };
-
-  function change(state, action) {
+  const change = (state, action) => {
     switch (action.type) {
       case ON_CHANGE:
         return { ...state, [action.evt.target.name]: action.evt.target.value };
       case ON_CHANGE_AGENCY_NAME:
-        return { ...state, agency_id: retreiveAgencyIdByName };
+        return { ...state, agency_id: action.agency_id };
       default:
         return state;
     }
-  }
-
-  const agencies = useSelector((state) => state.agenciesReducer.agencies);
-  const [newCar, send] = useReducer(change, {});
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAgencies());
-    // eslint-disable-next-line
-  }, []);
-
-  const handleChange = (evt) => {
-    send({ type: ON_CHANGE, evt });
   };
 
-  const handleChangeAgencyName = () => {
-    send({ type: ON_CHANGE_AGENCY_NAME });
+  const agencies = useSelector((state) => state.agenciesReducer.agencies);
+
+  const [newCar, send] = useReducer(change, {});
+
+  const agenceNameRef = useRef("");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAgencies());
+  }, [dispatch]);
+
+  const handleChangeAgencyName = async () => {
+    await axios
+      .get(`/api/agencies/getAgencyByName/${agenceNameRef.current.value}`)
+      .then((response) => {
+        send({
+          type: ON_CHANGE_AGENCY_NAME,
+          agency_id: response.data.data._id,
+        });
+      })
+      .catch((err) => alert(err.response.data.msg));
   };
 
   const handleSubmit = () => {
@@ -65,7 +61,7 @@ function AddCar() {
               name="registration_number"
               required={true}
               autoComplete="registration_number"
-              onChange={handleChange}
+              onChange={(evt) => send({ type: ON_CHANGE, evt })}
             />
           </Form.Group>
 
@@ -77,7 +73,7 @@ function AddCar() {
               name="mark"
               required={true}
               autoComplete="mark"
-              onChange={handleChange}
+              onChange={(evt) => send({ type: ON_CHANGE, evt })}
             />
           </Form.Group>
 
@@ -88,7 +84,7 @@ function AddCar() {
               placeholder="Entrez le modéle svp"
               name="model"
               autoComplete="model"
-              onChange={handleChange}
+              onChange={(evt) => send({ type: ON_CHANGE, evt })}
             />
           </Form.Group>
         </Row>
@@ -102,7 +98,7 @@ function AddCar() {
               name="power"
               required={true}
               autoComplete="power"
-              onChange={handleChange}
+              onChange={(evt) => send({ type: ON_CHANGE, evt })}
             />
           </Form.Group>
 
@@ -114,7 +110,7 @@ function AddCar() {
               name="fuel_type"
               required={true}
               autoComplete="fuel_type"
-              onChange={handleChange}
+              onChange={(evt) => send({ type: ON_CHANGE, evt })}
             />
           </Form.Group>
 
@@ -125,7 +121,7 @@ function AddCar() {
               placeholder="Entrez la couleur svp"
               name="color"
               autoComplete="color"
-              onChange={handleChange}
+              onChange={(evt) => send({ type: ON_CHANGE, evt })}
             />
           </Form.Group>
         </Row>
@@ -138,7 +134,7 @@ function AddCar() {
               name="hour_price"
               autoComplete="hour_price"
               placeholder="Entrer le cout de la location / h svp"
-              onChange={handleChange}
+              onChange={(evt) => send({ type: ON_CHANGE, evt })}
             />
           </Form.Group>
 
@@ -146,7 +142,7 @@ function AddCar() {
             <Form.Label>Agence</Form.Label>
             <Form.Select
               defaultValue="Choisissez une agence svp..."
-              ref={agenceName}
+              ref={agenceNameRef}
               onChange={handleChangeAgencyName}
             >
               <option value="">...</option>
@@ -159,7 +155,7 @@ function AddCar() {
           </Form.Group>
         </Row>
 
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
+        <Button variant="primary" onClick={handleSubmit}>
           Ajouter une agence
         </Button>
       </Form>
